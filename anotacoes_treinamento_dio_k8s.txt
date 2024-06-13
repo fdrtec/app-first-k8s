@@ -1,0 +1,62 @@
+Dicas treinamento Dio:
+
+#MiniKube
+Container para simular Kubernets localmente:
+$ minikube start
+$ minikube status
+$ kubectl get services
+$ kubectl get pods 
+  * informações adicionais dos pods
+    $ kubectl get pod -o wide
+    - Mostra ip interno para comunicação entre containers;
+    - somente será acessivel dentro do ssh o minikube;
+      $ minikube ssh      
+      $ curl http://10.244.0.5
+
+#Pod
+Encaixotar um container docker dentro de um pacote do cluster K8s (Pod).
+- Arquivo yaml (yml) : configuração do Pod
+- Primeiro arquivo de exemplo: simple-pod.yml
+- explicação dos itens:
+  -- apiVersion: Versão do pod;
+  -- kind: especificação do tipo de geração, no caso seria um Pod;
+  -- metadata: Nome e labels;
+  -- spec: declaração de containers dockers.
+
+  * criar o pod
+  $ kubectl apply -f .simple-pod.yml
+
+  Local dos meus repositorios de imagem docker
+  https://hub.docker.com/repositories/fdrtec
+
+
+#Deployments
+- Criar replicas para dividir processamento;
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+- Entender os nós existentes
+$ kubectl get nodes (só aparece do minikube)
+$ kubectl describe node minikube (descreve detalhes de um nó)
+
+- Arquivo yml para declaração de Deployments, visão replicação
+ex no arquivo simple-deployment.yml
+
+para criar o deployment
+$ kubctl apply -f simple-deployment.yml
+$ kubectl get deployments (mostar um deployment)
+$ kubectl get pods (mostra + 3 pods que são o replicados)
+* mesmo que eu tente excluir na mão umas da replicas(pod), ele volta por causa a instrução no yml
+$ kubectl describe deployment app-html-deployment
+* scalar replicas via CLI com deployment rodando
+$ kubctl scale deployment app-html-deployment --replicas=5
+
+#Exposição
+* Para acesso aos pods replicados é preciso criar um service exposição;
+$ kubectl expose deployment app-html-deployment --type=LoadBalancer --name=app-html --port=80
+$ kubctl get services
+* No uso do minikube o ip externo vai sempre aparecer pendente (em nuvem não acontece)
+$ minikube service --url app-html
+$ curl http://192.168.49.2:30699
+
+
+
