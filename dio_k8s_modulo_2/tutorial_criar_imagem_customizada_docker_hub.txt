@@ -1,0 +1,12 @@
+- criar um index.html simples
+- criar um dockerfile (FROM httpd: latest) server apache
+- ir na pagina do dockerhub e verificar as dicas da imagem do httpd:
+- Como copiar arquivo index.html para dentro de pasta de execução do arquivo
+- no https://hub.docker.com/_/httpd
+
+- $ docker build . -t fdrtec/app-html:1.0  
+- $ docker images
+- $ docker login
+- $ docker push fdrtec/app-html:1.0
+
+- Na sequencia usar o modelo do modulo 1 para fazer o deployment apontando para a imagem customizada
