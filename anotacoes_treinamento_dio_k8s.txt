@@ -60,6 +60,10 @@ $ curl http://192.168.49.2:30699
 
 #ver ip via node
 $ kubectl get nodes -o wide 
+$ kubectl describe service nome-service
+$ minikube service nome-service --url
+$kubectl exec --stdin --tty nome-app -- /bin/bash
+
 
 
 
