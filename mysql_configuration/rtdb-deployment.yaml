@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtdb
+spec:
+  selector:
+    matchLabels:
+      app: rtdb
+  template:
+    metadata:
+      labels:
+        app: rtdb
+    spec:
+      containers:
+        - name: rtdb
+          image: mysql:8.4
+          envFrom:
+            - secretRef:
+                name: rtdb-secret
